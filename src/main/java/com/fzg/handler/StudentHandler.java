@@ -2,10 +2,7 @@ package com.fzg.handler;
 
 import com.fzg.entity.Student;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.ListOperations;
-import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.core.SetOperations;
-import org.springframework.data.redis.core.ZSetOperations;
+import org.springframework.data.redis.core.*;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -78,7 +75,10 @@ public class StudentHandler {
         return zSetOperations.range("zset1",0,  -1);
     }
 
-    public HashMap<String,HashMap<String,String>> hashmapTest(){
-        
+    @RequestMapping("/hash")
+    public void hashTest(){
+        HashOperations<String, String, String> hashOperations = redisTemplate.opsForHash();
+        hashOperations.put("key","hashkey","Hello");
+        System.out.println(hashOperations.get("key","hashkey"));
     }
 }
